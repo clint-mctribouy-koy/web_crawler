@@ -83,7 +83,7 @@ class BostonRealtySpider(scrapy.Spider):
                 'sublease': space_table_row[1],
             }
         except Exception as e:
-            print('ERROR: There was error trying to get brochure link', e)
+            print('ERROR: There was error trying to get spaces information', e)
             spaces_table = {}
 
         item['spaces'].append(spaces_table)
@@ -140,6 +140,10 @@ class BostonRealtySpider(scrapy.Spider):
 
 class BostonRealtyListingsSpider(scrapy.Spider):
     name = 'listing_crawler'
+
+    custom_settings = {
+        'FEEDS': {'data/%(name)s_%(time)s.jsonl': {'format': 'jsonlines'}}
+        }
 
     def start_requests(self):
         url = 'https://buildout.com/plugins/5339d012fdb9c122b1ab2f0ed59a55ac0327fd5f/bradvisors.com/inventory/?pluginId=0&iframe=true&embedded=true&cacheSearch=true&initialPropertyUses=1'
